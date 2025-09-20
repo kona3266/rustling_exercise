@@ -34,7 +34,22 @@ impl Default for Person {
 // 5. Parse the second element from the split operation into a `u8` as the age.
 // 6. If parsing the age fails, return the default of `Person`.
 impl From<&str> for Person {
-    fn from(s: &str) -> Self {}
+    fn from(s: &str) -> Self {
+        let parts: Vec<&str> = s.split(',').collect();
+        if parts.len() == 2 {
+            if parts[0].len() > 0 && parts[1].len() > 0 {
+                let age: Option<u8> = parts[1].parse::<u8>().ok(); 
+                if let Some(n) = age { 
+                return Person {
+                    name: String::from(parts[0]),
+                    age: n 
+                };
+                }
+            }
+        }
+        Person::default()
+        
+    }
 }
 
 fn main() {
